@@ -1,0 +1,14 @@
+{
+  "root": true,
+
+  "parserOptions": {
+    "parser": "babel-eslint",
+    "sourceType": "module"
+  },
+
+  "extends": ["standard"],
+
+  "rules": {
+    "quotes": ["error", "single"]
+  }
+}

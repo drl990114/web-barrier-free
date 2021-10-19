@@ -8,18 +8,20 @@ const dirs = fs.readdirSync('packages').filter((p) => {
   return true
 })
 
-async function build(target) {
+async function build (target) {
   await execa('rollup', ['-c', '--environment', `TARGET:${target}`], {
-    stdio: 'inherit',
+    stdio: 'inherit'
   })
 }
-async function runParallel(dirs, iterFn) {
-  let result = []
-  for (let item of dirs) {
+
+async function runParallel (dirs, iterFn) {
+  const result = []
+  for (const item of dirs) {
     result.push(iterFn(item))
   }
   return Promise.all(result)
 }
+
 runParallel(dirs, build).then(() => {
   console.log('成功')
 })

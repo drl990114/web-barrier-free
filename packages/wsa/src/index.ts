@@ -1,2 +1,3 @@
 import { isArray } from '@wbf/shared'
-export const test = 'test'
+
+export let test = 'test'
