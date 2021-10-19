@@ -1,0 +1,16 @@
+{
+  "name": "@wbf/wsa",
+  "private": true,
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "buildOptions": {
+    "name": "WBFWebSpeechAPI",
+    "formats": [
+      "global"
+    ]
+  },
+  "dependencies": {
+    "@wbf/shared": "^0.1.0"
+  }
+}
