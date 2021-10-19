@@ -3,10 +3,11 @@
 
   "parserOptions": {
     "parser": "babel-eslint",
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": "./tsconfig.json"
   },
 
-  "extends": ["standard"],
+  "extends": ["standard-with-typescript"],
 
   "rules": {
     "quotes": ["error", "single"]

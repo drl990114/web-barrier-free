@@ -1,6 +1,5 @@
-
-function isArray(val: any) {
-  return Array.isArray(val)
+function isArray (val: any): boolean {
+  return Boolean(Array.isArray(val))
 }
 
 export { isArray }

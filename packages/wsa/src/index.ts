@@ -1,3 +1,1 @@
-import { isArray } from '@wbf/shared'
-
-export let test = 'test'
+export const test = 'test'

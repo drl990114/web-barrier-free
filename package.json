@@ -10,11 +10,15 @@
   "scripts": {
     "build": "node scripts/build.js",
     "dev": "node scripts/dev.js",
-    "delete": "rimraf node_modules"
+    "delete": "rimraf node_modules",
+    "lint": "eslint --ext js,ts,tsx ."
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
     "eslint-config-standard": "^16.0.3",
+    "eslint-config-standard-with-typescript": "^21.0.1",
     "eslint-plugin-standard": "^5.0.0",
     "execa": "^5.1.1",
     "rimraf": "^3.0.2",
