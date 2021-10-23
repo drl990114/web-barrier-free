@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>as<span>dasd</span></div>
+    <a>a</a>
+    <a>b</a>
+    <button onclick="handleOpen()">open</button>
+    <button onclick="handleClose()">close</button>
+    <script src="../node_modules/@wbf/wsa/dist/wsa.global.js"></script>
+    <script>
+        const Wbfwsa = WBFWebSpeechAPI
+        const wbfwsa = new Wbfwsa()
+        const handleOpen = () => {
+            wbfwsa.open()
+        }
+        const handleClose = () => {
+            wbfwsa.close()
+        }
+
+
+    </script>
+</body>
+
+</html>
