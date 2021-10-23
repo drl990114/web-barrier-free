@@ -1,16 +1,19 @@
 class Wbfwsa {
   public target
-  public language
+  public language: string
+  public rate: number
+  public pitch: number
+  private readonly utterThis: SpeechSynthesisUtterance | null = null
   private readonly handler
 
   constructor (options) {
     this.target = null
     this.language = 'zh-CN'
+    this.rate = 1
+    this.pitch = 1
     this.handler = (e) => {
       if (e.target !== this.target && e.target !== document.body) {
         this.target = e.target
-        console.log('tag', e.target.tagName)
-        console.log('text', e.target.innerText)
         this.playAudio(e.target.innerText)
       }
     }
@@ -28,6 +31,7 @@ class Wbfwsa {
     const msg = new SpeechSynthesisUtterance()
     msg.text = String
     msg.lang = this.language
+    speechSynthesis.cancel()
     speechSynthesis.speak(msg)
   }
 }
