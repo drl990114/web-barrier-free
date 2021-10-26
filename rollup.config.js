@@ -1,6 +1,7 @@
 import ts from 'rollup-plugin-typescript2'
 import resolvePlugin from '@rollup/plugin-node-resolve'
 import path from 'path'
+import postcss from 'rollup-plugin-postcss'
 
 const packagesDir = path.resolve(__dirname, 'packages')
 const packageDir = path.resolve(packagesDir, process.env.TARGET)
@@ -32,6 +33,7 @@ function createConfig (format, output) {
     input: resolve('src/index.ts'),
     output,
     plugins: [
+      postcss(),
       ts({
         tsconfig: path.resolve(__dirname, 'tsconfig.json')
       }),
