@@ -12,11 +12,11 @@ class Wbfwsa {
   private readonly overHandler
   private readonly outHandler
 
-  constructor (options) {
+  constructor (options?: Options) {
     this.target = null
-    this.language = 'zh-CN'
-    this.rate = 1
-    this.pitch = 1
+    this.language = options?.language ?? 'zh-CN'
+    this.rate = options?.rate ?? 1
+    this.pitch = options?.pitch ?? 1
     this.overHandler = (e: { target: HTMLElement }) => {
       if (
         e.target !== document.body &&
@@ -28,6 +28,17 @@ class Wbfwsa {
         const text = descriptionTag !== null ? `${descriptionTag}: ${e.target.innerText}` : e.target.innerText
         this.playAudio(text)
         if (this.showBarEl != null) {
+          if (text.length > 150) {
+            this.showBarEl.style.fontSize = '24px'
+          } else if (text.length > 100) {
+            this.showBarEl.style.fontSize = '26px'
+          } else if (text.length > 50) {
+            this.showBarEl.style.fontSize = '28px'
+          } else if (text.length > 20) {
+            this.showBarEl.style.fontSize = '30px'
+          } else {
+            this.showBarEl.style.fontSize = '32px'
+          }
           this.showBarEl.innerText = text
         }
       }
@@ -45,6 +56,10 @@ class Wbfwsa {
   }
 
   close (): void {
+    const emphasizeEls = document.querySelectorAll(`.${emphasizeClassName}`)
+    emphasizeEls.forEach((el) => {
+      this.removeEmphasize(el)
+    })
     document.removeEventListener('mouseover', this.overHandler)
     document.removeEventListener('mouseout', this.outHandler)
     this.removeShowBarDom()
@@ -58,11 +73,11 @@ class Wbfwsa {
     speechSynthesis.speak(msg)
   }
 
-  emphasize (el: HTMLElement): void {
+  emphasize (el: HTMLElement | Element): void {
     el.classList.add(emphasizeClassName)
   }
 
-  removeEmphasize (el: HTMLElement): void {
+  removeEmphasize (el: HTMLElement | Element): void {
     el.classList.remove(emphasizeClassName)
   }
 
@@ -87,12 +102,15 @@ class Wbfwsa {
     showBar.style.bottom = '0px'
     showBar.style.left = '0px'
     showBar.style.width = '100%'
-    showBar.style.height = '80px'
-    showBar.style.fontSize = '32px'
+    showBar.style.minHeight = '50px'
+    showBar.style.maxHeight = '140px'
     showBar.style.fontWeight = 'bold'
     showBar.style.textAlign = 'center'
-    showBar.style.lineHeight = '80px'
+    showBar.style.wordBreak = 'break-word;'
+    showBar.style.overflow = 'hidden'
+    showBar.style.background = 'white'
     showBar.style.border = '2px solid #eee'
+
     document.body.appendChild(showBar)
     return showBar
   }
@@ -103,4 +121,11 @@ class Wbfwsa {
     }
   }
 }
+
+interface Options {
+  language?: string
+  rate?: number
+  pitch?: number
+}
+
 export default Wbfwsa
