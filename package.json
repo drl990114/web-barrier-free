@@ -1,15 +1,12 @@
 {
   "name": "web-barrier-free",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
   "version": "0.1.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "node scripts/build.js",
-    "dev": "node scripts/dev.js",
+    "build:esm": "tsc --module esnext --target es2015 --outDir ./es",
+    "build": "rollup -c && npm run build:esm",
+    "dev": "rollup -cw --environment TARGET:src",
     "delete": "rimraf node_modules",
     "lint": "eslint --ext js,ts,tsx ."
   },

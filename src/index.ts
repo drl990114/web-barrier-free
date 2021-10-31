@@ -3,7 +3,7 @@ import './index.css'
 const showBarDomId = '$$wsashowbar'
 const emphasizeClassName = 'emphasizeStyle'
 
-class Wbfwsa {
+class Wbf {
   public target
   public language: string
   public rate: number
@@ -128,4 +128,4 @@ interface Options {
   pitch?: number
 }
 
-export default Wbfwsa
+export default Wbf

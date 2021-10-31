@@ -26,10 +26,9 @@
     <button onclick="handleOpen()">open</button>
     <hr>
     <button onclick="handleClose()">close</button>
-    <script src="../node_modules/@wbf/wsa/dist/wsa.global.js"></script>
+    <script src="../dist/wbf.umd.js"></script>
     <script>
-        const Wbfwsa = WBFWebSpeechAPI
-        const wbfwsa = new Wbfwsa()
+        const wbfwsa = new wbf()
         const handleOpen = () => {
             wbfwsa.open()
         }
