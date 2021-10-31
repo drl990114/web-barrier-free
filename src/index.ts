@@ -49,7 +49,7 @@ class Wbf {
   }
 
   getElText (el: HTMLElement): string {
-    const tag = descriptionTag(el.tagName.toLowerCase())
+    const tag = descriptionTag(el.tagName)
     const text = tag !== null ? `${tag}: ${el.innerText}` : el.innerText
     return text
   }

@@ -1,5 +1,6 @@
 export const descriptionTag = (tagName: string): string | null => {
-  switch (tagName) {
+  const tag = tagName.toLowerCase()
+  switch (tag) {
     case 'a':
     case 'nav':
       return '链接'
