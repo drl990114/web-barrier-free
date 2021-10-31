@@ -1,15 +1,26 @@
 {
   "name": "web-barrier-free",
   "version": "0.1.0",
-  "main": "index.js",
+  "main": "lib/index.js",
   "license": "MIT",
   "scripts": {
     "build:esm": "tsc --module esnext --target es2015 --outDir ./es",
-    "build": "rollup -c && npm run build:esm",
+    "build:cjs": "tsc --module commonjs --target es5 --outDir ./lib",
+    "build": "rollup -c && npm run build:esm && npm run build:cjs",
     "dev": "rollup -cw --environment TARGET:src",
     "delete": "rimraf node_modules",
     "lint": "eslint --ext js,ts,tsx ."
   },
+  "keywords": [
+    "web",
+    "barrier",
+    "free",
+    "voice",
+    "speechSynthesis",
+    "SpeechSynthesisUtterance",
+    "dom",
+    "bom"
+  ],
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@typescript-eslint/eslint-plugin": "^5.1.0",

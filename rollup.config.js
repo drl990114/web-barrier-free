@@ -10,11 +10,6 @@ export default {
       file: 'dist/wbf.umd.js',
       format: 'umd',
       sourcemap: true
-    },
-    {
-      name: 'wbf',
-      file: 'dist/wbf.esm-bundler.js',
-      format: 'es'
     }
   ],
   plugins: [
