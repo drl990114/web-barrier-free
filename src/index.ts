@@ -13,6 +13,7 @@ class Wbf {
   public rate: number
   public pitch: number
   public showBarEl: HTMLDivElement | null = null
+  public externalFn: Function | null = null
   private overHandler
   private readonly outHandler
 
@@ -22,6 +23,7 @@ class Wbf {
     this.language = options?.language ?? defaultOptions.language
     this.rate = options?.rate ?? defaultOptions.rate
     this.pitch = options?.pitch ?? defaultOptions.pitch
+    this.externalFn = options?.externalFn ?? null
     this.overHandler = (e: { target: HTMLElement }) => overHandler(e, this)
     this.outHandler = (e: { target: HTMLElement }) => outHandler(e, this)
   }
@@ -62,13 +64,17 @@ class Wbf {
   }
 
   playAudio (String: string): void {
-    const msg = new SpeechSynthesisUtterance()
-    msg.text = String
-    msg.lang = this.language
-    msg.pitch = this.pitch
-    msg.rate = this.rate
-    speechSynthesis.cancel()
-    speechSynthesis.speak(msg)
+    if (this.externalFn != null) {
+      this.externalFn(String)
+    } else {
+      const msg = new SpeechSynthesisUtterance()
+      msg.text = String
+      msg.lang = this.language
+      msg.pitch = this.pitch
+      msg.rate = this.rate
+      speechSynthesis.cancel()
+      speechSynthesis.speak(msg)
+    }
   }
 
   emphasize (el: HTMLElement | Element): void {
@@ -113,6 +119,7 @@ interface Options {
   language?: string
   rate?: number
   pitch?: number
+  externalFn?: Function
 }
 
 type model = 'continuousRead' | 'fingerRead'
