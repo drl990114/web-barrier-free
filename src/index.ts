@@ -1,74 +1,72 @@
+import defaultOptions from './default'
+import { descriptionTag } from './util'
 import './index.css'
+import { outHandler, overHandler } from './handlers'
 
 const showBarDomId = '$$wsashowbar'
 const emphasizeClassName = 'emphasizeStyle'
 
 class Wbf {
   public target
+  public model: model
   public language: string
   public rate: number
   public pitch: number
   public showBarEl: HTMLDivElement | null = null
-  private readonly overHandler
+  private overHandler
   private readonly outHandler
 
   constructor (options?: Options) {
+    if (options == null) options = defaultOptions
     this.target = null
-    this.language = options?.language ?? 'zh-CN'
-    this.rate = options?.rate ?? 1
-    this.pitch = options?.pitch ?? 1
-    this.overHandler = (e: { target: HTMLElement }) => {
-      if (
-        e.target !== document.body &&
-        e.target.tagName.toLowerCase() !== 'html'
-      ) {
-        this.target = e.target
-        this.emphasize(e.target)
-        const descriptionTag = this.descriptionTag(e.target.tagName.toLowerCase())
-        const text = descriptionTag !== null ? `${descriptionTag}: ${e.target.innerText}` : e.target.innerText
-        this.playAudio(text)
-        if (this.showBarEl != null) {
-          if (text.length > 150) {
-            this.showBarEl.style.fontSize = '24px'
-          } else if (text.length > 100) {
-            this.showBarEl.style.fontSize = '26px'
-          } else if (text.length > 50) {
-            this.showBarEl.style.fontSize = '28px'
-          } else if (text.length > 20) {
-            this.showBarEl.style.fontSize = '30px'
-          } else {
-            this.showBarEl.style.fontSize = '32px'
-          }
-          this.showBarEl.innerText = text
-        }
-      }
-    }
-    this.outHandler = (e: { target: HTMLElement }) => {
-      this.removeEmphasize(e.target)
-    }
+    this.language = options?.language ?? defaultOptions.language
+    this.rate = options?.rate ?? defaultOptions.rate
+    this.pitch = options?.pitch ?? defaultOptions.pitch
+    this.overHandler = (e: { target: HTMLElement }) => overHandler(e, this)
+    this.outHandler = (e: { target: HTMLElement }) => outHandler(e, this)
   }
 
-  open (): void {
-    const showBar = this.createShowBarDom()
-    this.showBarEl = showBar
-    document.addEventListener('mouseover', this.overHandler)
-    document.addEventListener('mouseout', this.outHandler)
+  open (overHandler?, outHandler?): void {
+    if (this.showBarEl == null) {
+      const showBar = this.createShowBarDom()
+      this.showBarEl = showBar
+    }
+
+    document.addEventListener('mouseover', overHandler ?? this.overHandler)
+    document.addEventListener('mouseout', outHandler ?? this.outHandler)
   }
 
-  close (): void {
+  close (overHandler?, outHandler?, showBar = true): void {
     const emphasizeEls = document.querySelectorAll(`.${emphasizeClassName}`)
     emphasizeEls.forEach((el) => {
       this.removeEmphasize(el)
     })
+    document.removeEventListener('mouseover', overHandler ?? this.overHandler)
+    document.removeEventListener('mouseout', outHandler ?? this.outHandler)
+    showBar && this.removeShowBarDom()
+  }
+
+  getElText (el: HTMLElement): string {
+    const tag = descriptionTag(el.tagName.toLowerCase())
+    const text = tag !== null ? `${tag}: ${el.innerText}` : el.innerText
+    return text
+  }
+
+  continuousRead (): void {
+    const allText = this.getElText(document.body)
     document.removeEventListener('mouseover', this.overHandler)
-    document.removeEventListener('mouseout', this.outHandler)
-    this.removeShowBarDom()
+    this.overHandler = (e: { target: HTMLElement }): any => overHandler(e, this, false)
+
+    this.open(this.overHandler)
+    this.playAudio(allText)
   }
 
   playAudio (String: string): void {
     const msg = new SpeechSynthesisUtterance()
     msg.text = String
     msg.lang = this.language
+    msg.pitch = this.pitch
+    msg.rate = this.rate
     speechSynthesis.cancel()
     speechSynthesis.speak(msg)
   }
@@ -81,20 +79,8 @@ class Wbf {
     el.classList.remove(emphasizeClassName)
   }
 
-  descriptionTag (tagName: string): string | null {
-    switch (tagName) {
-      case 'a':
-      case 'nav':
-        return '链接'
-      case 'image':
-        return '图片'
-      default:
-        return null
-    }
-  }
-
   createShowBarDom (): HTMLDivElement {
-    const prev = document.getElementById(showBarDomId) as HTMLDivElement
+    const prev = document.getElementById(showBarDomId) as HTMLDivElement | null
     if (prev != null) return prev
     const showBar = document.createElement('div')
     showBar.id = showBarDomId
@@ -118,6 +104,7 @@ class Wbf {
   removeShowBarDom (): void {
     if (this.showBarEl != null) {
       this.showBarEl.remove()
+      this.showBarEl = null
     }
   }
 }
@@ -128,4 +115,5 @@ interface Options {
   pitch?: number
 }
 
+type model = 'continuousRead' | 'fingerRead'
 export default Wbf
