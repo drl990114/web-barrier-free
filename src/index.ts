@@ -1,7 +1,7 @@
 import defaultOptions from './default'
-import { descriptionTag } from './util'
-import './index.css'
+import { descriptionTag, getNotContainChildText } from './util'
 import { outHandler, overHandler } from './handlers'
+import './index.css'
 
 const showBarDomId = '$$wsashowbar'
 const emphasizeClassName = 'emphasizeStyle'
@@ -43,6 +43,7 @@ class Wbf {
     emphasizeEls.forEach((el) => {
       this.removeEmphasize(el)
     })
+    speechSynthesis.cancel()
     document.removeEventListener('mouseover', overHandler ?? this.overHandler)
     document.removeEventListener('mouseout', outHandler ?? this.outHandler)
     showBar && this.removeShowBarDom()
@@ -50,7 +51,8 @@ class Wbf {
 
   getElText (el: HTMLElement): string {
     const tag = descriptionTag(el.tagName)
-    const text = tag !== null ? `${tag}: ${el.innerText}` : el.innerText
+    const notContainChildText = getNotContainChildText(el)
+    const text = tag !== null ? `${tag}: ${notContainChildText}` : notContainChildText
     return text
   }
 
