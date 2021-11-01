@@ -7,7 +7,7 @@ const showBarDomId = '$$wsashowbar'
 const emphasizeClassName = 'emphasizeStyle'
 
 class Wbf {
-  public target
+  public cache: Map<HTMLElement, SpeechSynthesisUtterance> = new Map()
   public model: model
   public language: string
   public rate: number
@@ -19,7 +19,6 @@ class Wbf {
 
   constructor (options?: Options) {
     if (options == null) options = defaultOptions
-    this.target = null
     this.language = options?.language ?? defaultOptions.language
     this.rate = options?.rate ?? defaultOptions.rate
     this.pitch = options?.pitch ?? defaultOptions.pitch
@@ -65,17 +64,33 @@ class Wbf {
     this.playAudio(allText)
   }
 
-  playAudio (String: string): void {
+  createUtterance (str): SpeechSynthesisUtterance {
+    const msg = new SpeechSynthesisUtterance()
+    msg.text = str
+    msg.lang = this.language
+    msg.pitch = this.pitch
+    msg.rate = this.rate
+    return msg
+  }
+
+  playAudio (str: string, el?: HTMLElement): SpeechSynthesisUtterance | undefined {
     if (this.externalFn != null) {
-      this.externalFn(String)
+      this.externalFn(str)
     } else {
-      const msg = new SpeechSynthesisUtterance()
-      msg.text = String
-      msg.lang = this.language
-      msg.pitch = this.pitch
-      msg.rate = this.rate
       speechSynthesis.cancel()
+      if (el !== undefined) {
+        let msg = this.cache.get(el)
+        if (msg === undefined) {
+          msg = this.createUtterance(str)
+          this.cache.set(el, msg)
+        }
+
+        speechSynthesis.speak(msg)
+        return msg
+      }
+      const msg = this.createUtterance(str)
       speechSynthesis.speak(msg)
+      return msg
     }
   }
 
