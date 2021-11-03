@@ -12,6 +12,7 @@ class Wbf {
   public language: string
   public rate: number
   public pitch: number
+  public volume: number
   public showBarEl: HTMLDivElement | null = null
   public externalFn: Function | null = null
   private overHandler
@@ -22,6 +23,7 @@ class Wbf {
     this.language = options?.language ?? defaultOptions.language
     this.rate = options?.rate ?? defaultOptions.rate
     this.pitch = options?.pitch ?? defaultOptions.pitch
+    this.volume = options?.volume ?? defaultOptions.volume
     this.externalFn = options?.externalFn ?? null
     this.overHandler = (e: { target: HTMLElement }) => overHandler(e, this)
     this.outHandler = (e: { target: HTMLElement }) => outHandler(e, this)
@@ -70,6 +72,7 @@ class Wbf {
     msg.lang = this.language
     msg.pitch = this.pitch
     msg.rate = this.rate
+    msg.volume = this.volume
     return msg
   }
 
@@ -137,6 +140,7 @@ interface Options {
   rate?: number
   pitch?: number
   externalFn?: Function
+  volume?: number
 }
 
 type model = 'continuousRead' | 'fingerRead'
