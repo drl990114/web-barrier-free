@@ -5,10 +5,9 @@ import './index.css'
 
 const showBarDomId = '$$wsashowbar'
 const emphasizeClassName = 'emphasizeStyle'
-
+const optionsArr: string[] = ['language', 'rate', 'pitch', 'volume']
 class Wbf {
   public cache: Map<HTMLElement, SpeechSynthesisUtterance> = new Map()
-  public model: model
   public language: string
   public rate: number
   public pitch: number
@@ -50,17 +49,29 @@ class Wbf {
     showBar && this.removeShowBarDom()
   }
 
+  changeOptions (keyName: string, value): void {
+    if (optionsArr.includes[keyName] === false && this[keyName] !== undefined) {
+      throw new Error(`${keyName} options do not exist on wbf`)
+    }
+    this[keyName] = value
+    this.cache.forEach((value, key) => {
+      value[keyName] = value
+    })
+  }
+
   getElText (el: HTMLElement): string {
     const tag = descriptionTag(el.tagName)
     const notContainChildText = getNotContainChildText(el)
-    const text = tag !== null ? `${tag}: ${notContainChildText}` : notContainChildText
+    const text =
+      tag !== null ? `${tag}: ${notContainChildText}` : notContainChildText
     return text
   }
 
   continuousRead (): void {
     const allText = this.getElText(document.body)
     document.removeEventListener('mouseover', this.overHandler)
-    this.overHandler = (e: { target: HTMLElement }): any => overHandler(e, this, false)
+    this.overHandler = (e: { target: HTMLElement }): any =>
+      overHandler(e, this, false)
 
     this.open(this.overHandler)
     this.playAudio(allText)
@@ -76,7 +87,10 @@ class Wbf {
     return msg
   }
 
-  playAudio (str: string, el?: HTMLElement): SpeechSynthesisUtterance | undefined {
+  playAudio (
+    str: string,
+    el?: HTMLElement
+  ): SpeechSynthesisUtterance | undefined {
     if (this.externalFn != null) {
       this.externalFn(str)
     } else {
@@ -143,5 +157,4 @@ interface Options {
   volume?: number
 }
 
-type model = 'continuousRead' | 'fingerRead'
 export default Wbf
