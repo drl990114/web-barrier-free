@@ -35,6 +35,12 @@
     <button onclick="handleClose()">close</button>
     <hr>
     <button onclick="continuousRead()">连读</button>
+    <button onclick="fingerRead()">指读</button>
+    <hr>
+    音量
+    <button onclick="addVolume()">+</button>
+    <button onclick="reduceVolume()">—</button>
+
 
     <script src="../dist/wbf.umd.js"></script>
     <script>
@@ -51,8 +57,18 @@
             instance.close()
         }
         const continuousRead = () => {
-            instance.continuousRead()
+            instance.changeMode('continuous')
         }
+        const fingerRead = ()=>{
+            instance.changeMode('finger')
+        }
+        const addVolume = () => {
+            instance.changeOptions('rate',++instance.volume)
+        }
+        const reduceVolume = () => {
+            instance.changeOptions('rate',--instance.volume)
+        }
+
 
     </script>
 </body>
