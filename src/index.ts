@@ -1,24 +1,26 @@
 import defaultOptions from './default'
-import { descriptionTag, getNotContainChildText } from './util'
+import { testReadMode } from './util'
 import { outHandler, overHandler } from './handlers'
 import './index.css'
 
 const showBarDomId = '$$wsashowbar'
 const emphasizeClassName = 'emphasizeStyle'
 const optionsArr: string[] = ['language', 'rate', 'pitch', 'volume']
+
 class Wbf {
-  public cache: Map<HTMLElement, SpeechSynthesisUtterance> = new Map()
+  public readMode: readMode = 'finger'
   public language: string
   public rate: number
   public pitch: number
   public volume: number
   public showBarEl: HTMLDivElement | null = null
   public externalFn: Function | null = null
-  private overHandler
+  private readonly overHandler
   private readonly outHandler
 
   constructor (options?: Options) {
     if (options == null) options = defaultOptions
+    options?.readMode !== undefined && (this.readMode = options.readMode)
     this.language = options?.language ?? defaultOptions.language
     this.rate = options?.rate ?? defaultOptions.rate
     this.pitch = options?.pitch ?? defaultOptions.pitch
@@ -28,25 +30,19 @@ class Wbf {
     this.outHandler = (e: { target: HTMLElement }) => outHandler(e, this)
   }
 
-  open (overHandler?, outHandler?): void {
-    if (this.showBarEl == null) {
-      const showBar = this.createShowBarDom()
-      this.showBarEl = showBar
-    }
-
-    document.addEventListener('mouseover', overHandler ?? this.overHandler)
-    document.addEventListener('mouseout', outHandler ?? this.outHandler)
+  open (): void {
+    this.changeMode(this.readMode)
   }
 
-  close (overHandler?, outHandler?, showBar = true): void {
+  close (): void {
     const emphasizeEls = document.querySelectorAll(`.${emphasizeClassName}`)
     emphasizeEls.forEach((el) => {
       this.removeEmphasize(el)
     })
     speechSynthesis.cancel()
-    document.removeEventListener('mouseover', overHandler ?? this.overHandler)
-    document.removeEventListener('mouseout', outHandler ?? this.outHandler)
-    showBar && this.removeShowBarDom()
+    document.removeEventListener('mouseover', this.overHandler)
+    document.removeEventListener('mouseout', this.outHandler)
+    this.removeShowBarDom()
   }
 
   changeOptions (keyName: string, value): void {
@@ -54,27 +50,29 @@ class Wbf {
       throw new Error(`${keyName} options do not exist on wbf`)
     }
     this[keyName] = value
-    this.cache.forEach((value, key) => {
-      value[keyName] = value
-    })
+    console.log(this)
   }
 
-  getElText (el: HTMLElement): string {
-    const tag = descriptionTag(el.tagName)
-    const notContainChildText = getNotContainChildText(el)
-    const text =
-      tag !== null ? `${tag}: ${notContainChildText}` : notContainChildText
-    return text
+  changeMode (readMode: readMode): void {
+    if (!testReadMode(readMode)) {
+      throw new Error(`readMode not includes this ${readMode}`)
+    }
+    this.readMode = readMode
+    if (readMode !== 'finger') {
+      const allText = document.body.innerText
+      this.playAudio(allText)
+    }
+    this.addHandler()
   }
 
-  continuousRead (): void {
-    const allText = this.getElText(document.body)
-    document.removeEventListener('mouseover', this.overHandler)
-    this.overHandler = (e: { target: HTMLElement }): any =>
-      overHandler(e, this, false)
+  addHandler (): void {
+    if (this.showBarEl == null) {
+      const showBar = this.createShowBarDom()
+      this.showBarEl = showBar
+    }
 
-    this.open(this.overHandler)
-    this.playAudio(allText)
+    document.addEventListener('mouseover', this.overHandler)
+    document.addEventListener('mouseout', this.outHandler)
   }
 
   createUtterance (str): SpeechSynthesisUtterance {
@@ -95,16 +93,6 @@ class Wbf {
       this.externalFn(str)
     } else {
       speechSynthesis.cancel()
-      if (el !== undefined) {
-        let msg = this.cache.get(el)
-        if (msg === undefined) {
-          msg = this.createUtterance(str)
-          this.cache.set(el, msg)
-        }
-
-        speechSynthesis.speak(msg)
-        return msg
-      }
       const msg = this.createUtterance(str)
       speechSynthesis.speak(msg)
       return msg
@@ -149,7 +137,9 @@ class Wbf {
   }
 }
 
+type readMode = 'finger' | 'continuous'
 interface Options {
+  readMode?: readMode
   language?: string
   rate?: number
   pitch?: number
