@@ -1,3 +1,11 @@
+export const getElText = (el: HTMLElement): string => {
+  const tag = descriptionTag(el.tagName)
+  const notContainChildText = getNotContainChildText(el)
+  const text =
+    tag !== null ? `${tag}: ${notContainChildText}` : notContainChildText
+  return text
+}
+
 export const descriptionTag = (tagName: string): string | null => {
   const tag = tagName.toLowerCase()
   switch (tag) {
@@ -14,4 +22,9 @@ export const descriptionTag = (tagName: string): string | null => {
 export const getNotContainChildText = (el: HTMLElement): string => {
   const notContainChildText: string = Array.prototype.filter.call(el.childNodes, (node: { nodeType: number }) => node.nodeType === 3).map(node => node.nodeValue.trim()).join('')
   return notContainChildText
+}
+
+export const testReadMode = (mode: string): boolean => {
+  const modes = ['finger', 'continuous']
+  return Array.prototype.includes.call(modes, mode)
 }
