@@ -1,16 +1,17 @@
 {
   "name": "web-barrier-free",
-  "version": "0.1.0",
-  "main": "lib/index.js",
+  "version": "0.1.1",
+  "private": false,
+  "author": "halodong",
+  "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "build:esm": "rimraf es && tsc --module esnext --target es2015 --outDir ./es",
-    "build:cjs": "rimraf lib && tsc --module commonjs --target es5 --outDir ./lib",
-    "build": "npm run clear && rollup -c && npm run build:esm && npm run build:cjs",
+    "build": "npm run clear && rollup -c",
     "dev": "rollup -cw --environment TARGET:src",
     "delete": "rimraf node_modules",
-    "clear": "rimraf dist && rimraf es && rimraf lib",
-    "lint": "eslint --ext js,ts,tsx ."
+    "clear": "rimraf dist",
+    "lint": "eslint --ext js,ts,tsx .",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "web",
@@ -22,6 +23,11 @@
     "dom",
     "bom"
   ],
+  "homepage": "https://github.com/halodong/web-barrier-free",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halodong/web-barrier-free"
+  },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.5",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
