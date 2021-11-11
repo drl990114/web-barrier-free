@@ -7,7 +7,7 @@ export default {
   output: [
     {
       name: 'wbf',
-      file: 'dist/wbf.umd.js',
+      file: 'dist/index.js',
       format: 'umd',
       sourcemap: true
     }
