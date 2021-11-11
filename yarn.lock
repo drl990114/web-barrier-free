@@ -2439,11 +2439,6 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-run-s@^0.0.0:
-  version "0.0.0"
-  resolved "https://registry.nlark.com/run-s/download/run-s-0.0.0.tgz#599912be20c00ba7698655c9936d075d31b71754"
-  integrity sha1-WZkSviDAC6dphlXJk20HXTG3F1Q=
-
 safe-identifier@^0.4.2:
   version "0.4.2"
   resolved "https://registry.npm.taobao.org/safe-identifier/download/safe-identifier-0.4.2.tgz#cf6bfca31c2897c588092d1750d30ef501d59fcb"
