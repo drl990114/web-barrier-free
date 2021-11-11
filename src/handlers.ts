@@ -10,7 +10,7 @@ const overHandler = (
   if (e.target !== document.body && e.target.tagName.toLowerCase() !== 'html') {
     wbf.emphasize(e.target)
     const text = getElText(e.target)
-    wbf.readMode === 'finger' && wbf.playAudio(text, e.target)
+    wbf.readMode === 'finger' && wbf.playAudio(text)
 
     if (wbf.showBarEl != null) {
       if (text.length > 150) {

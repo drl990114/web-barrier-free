@@ -86,8 +86,7 @@ class Wbf {
   }
 
   playAudio (
-    str: string,
-    el?: HTMLElement
+    str: string
   ): SpeechSynthesisUtterance | undefined {
     if (this.externalFn != null) {
       this.externalFn(str)
@@ -117,7 +116,7 @@ class Wbf {
     showBar.style.left = '0px'
     showBar.style.width = '100%'
     showBar.style.minHeight = '50px'
-    showBar.style.maxHeight = '140px'
+    showBar.style.maxHeight = '300px'
     showBar.style.fontWeight = 'bold'
     showBar.style.textAlign = 'center'
     showBar.style.wordBreak = 'break-word;'
