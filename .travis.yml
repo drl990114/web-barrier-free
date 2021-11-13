@@ -1,0 +1,14 @@
+sudo: false
+language: node_js
+node_js:
+ - lts/*
+
+cache:
+  directories:
+    - node_modules
+
+install: 
+ - yarn
+
+script:
+ - yarn lint
