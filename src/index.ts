@@ -9,7 +9,7 @@ const optionsArr: string[] = ['language', 'rate', 'pitch', 'volume']
 
 class Wbf {
   public readMode: readMode = 'finger'
-  public language: string
+  public language: language
   public rate: number
   public pitch: number
   public volume: number
@@ -50,7 +50,6 @@ class Wbf {
       throw new Error(`${keyName} options do not exist on wbf`)
     }
     this[keyName] = value
-    console.log(this)
   }
 
   changeMode (readMode: readMode): void {
@@ -137,9 +136,10 @@ class Wbf {
 }
 
 type readMode = 'finger' | 'continuous'
+export type language = 'en' | 'zh-CN'
 interface Options {
   readMode?: readMode
-  language?: string
+  language?: language
   rate?: number
   pitch?: number
   externalFn?: Function

@@ -1,7 +1,9 @@
+import { language } from './index'
+
 const defaultOptions = {
 
   // 语言
-  language: 'zh-CN',
+  language: 'zh-CN' as language,
 
   // 语速
   rate: 1,
