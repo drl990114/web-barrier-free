@@ -1,6 +1,6 @@
 {
   "name": "web-barrier-free",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "private": false,
   "author": "halodong",
   "main": "dist/index.js",
