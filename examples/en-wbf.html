@@ -113,12 +113,7 @@
     <div class="tool-bar">
         <div>
             <button onclick="handleOpen()">open</button>
-            <button onclick="handleClose()">close</button>
-            <button onclick="continuousRead()">连读</button>
-            <button onclick="fingerRead()">指读</button>
-            音量
-            <button onclick="addVolume()">+</button>
-            <button onclick="reduceVolume()">—</button>
+
         </div>
     </div>
     <main id="main">
@@ -242,24 +237,9 @@
             pitch: 1,
             readModd: 'finger'
         }
-        const instance = new wbf(options)
+        const instance = new Wbf(options)
         const handleOpen = () => {
             instance.open()
-        }
-        const handleClose = () => {
-            instance.close()
-        }
-        const continuousRead = () => {
-            instance.changeMode('continuous')
-        }
-        const fingerRead = () => {
-            instance.changeMode('finger')
-        }
-        const addVolume = () => {
-            instance.changeOptions('rate', ++instance.volume)
-        }
-        const reduceVolume = () => {
-            instance.changeOptions('rate', --instance.volume)
         }
 
 
