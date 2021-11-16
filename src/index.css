@@ -1,4 +1,47 @@
 .emphasizeStyle {
-    background: black;
-    color: white;
+  background: black;
+  color: white;
+}
+
+.consoleEl {
+  padding: 10px;
+  z-index: 9999;
+  border-bottom: 1px #2f5bb7 solid;
+}
+
+.consoleEl .consoleEl-main {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  width: 50vw;
+}
+@media (max-width: 750px) {
+  .consoleEl .consoleEl-main {
+    width: 100vw;
+  }
+}
+.consoleEl button {
+  color: white;
+  background: #4c8ffb;
+  padding: 5px 10px;
+  border-radius: 2px;
+  font-weight: bold;
+  font-size: 9pt;
+  outline: none;
+  box-shadow: inset 0 1px 0 #80b0fb;
+}
+
+.consoleEl button:hover {
+  border: 1px #2f5bb7 solid;
+  box-shadow: 0 1px 1px #eaeaea, inset 0 1px 0 #5a94f1;
+  background: #3f83f1;
+}
+
+.consoleEl #_wbfClose {
+  border: 1px #f0120b solid;
+  background-color: #d1341f;
+}
+.consoleEl #_wbfClose:hover {
+  background-color: #ad2210;
 }

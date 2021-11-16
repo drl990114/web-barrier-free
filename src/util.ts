@@ -1,4 +1,11 @@
 // const
+
+export const showBarDomId = '$$wsashowbar'
+export const consoleDomId = '$$wsaConsole'
+export const emphasizeClassName = 'emphasizeStyle'
+export const consoleClassName = 'consoleEl'
+export const optionsArr: string[] = ['language', 'rate', 'pitch', 'volume']
+
 const cnGather = {
   a: '链接',
   img: '图片',

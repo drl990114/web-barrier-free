@@ -1,5 +1,5 @@
 import Wbf from './index'
-import { getElText, getNotContainChildText } from './util'
+import { getElText, getNotContainChildText, showBarDomId } from './util'
 
 const overHandler = (
   e: { target: HTMLElement },
@@ -7,7 +7,8 @@ const overHandler = (
 ): void => {
   const notContainChildText = getNotContainChildText(e.target)
   if (notContainChildText.length === 0) return
-  if (e.target !== document.body && e.target.tagName.toLowerCase() !== 'html') {
+  if (e.target !== document.body && e.target.tagName.toLowerCase() !== 'html' &&
+  e.target.id !== showBarDomId) {
     wbf.emphasize(e.target)
     const text = getElText(e.target, wbf.language)
     wbf.readMode === 'finger' && wbf.playAudio(text)

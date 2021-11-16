@@ -1,11 +1,7 @@
 import defaultOptions from './default'
-import { testReadMode } from './util'
+import { consoleClassName, consoleDomId, emphasizeClassName, optionsArr, showBarDomId, testReadMode } from './util'
 import { outHandler, overHandler } from './handlers'
 import './index.css'
-
-const showBarDomId = '$$wsashowbar'
-const emphasizeClassName = 'emphasizeStyle'
-const optionsArr: string[] = ['language', 'rate', 'pitch', 'volume']
 
 class Wbf {
   public readMode: readMode = 'finger'
@@ -14,6 +10,7 @@ class Wbf {
   public pitch: number
   public volume: number
   public showBarEl: HTMLDivElement | null = null
+  public needConsole: boolean = true
   public externalFn: Function | null = null
   private readonly overHandler
   private readonly outHandler
@@ -21,6 +18,8 @@ class Wbf {
   constructor (options?: Options) {
     if (options == null) options = defaultOptions
     options?.readMode !== undefined && (this.readMode = options.readMode)
+    options?.needConsole !== undefined &&
+      (this.needConsole = options.needConsole)
     this.language = options?.language ?? defaultOptions.language
     this.rate = options?.rate ?? defaultOptions.rate
     this.pitch = options?.pitch ?? defaultOptions.pitch
@@ -32,6 +31,7 @@ class Wbf {
 
   open (): void {
     this.changeMode(this.readMode)
+    this.needConsole && this.createConsole()
   }
 
   close (): void {
@@ -43,12 +43,14 @@ class Wbf {
     document.removeEventListener('mouseover', this.overHandler)
     document.removeEventListener('mouseout', this.outHandler)
     this.removeShowBarDom()
+    this.removeConsole()
   }
 
   changeOptions (keyName: string, value): void {
     if (optionsArr.includes[keyName] === false && this[keyName] !== undefined) {
       throw new Error(`${keyName} options do not exist on wbf`)
     }
+    console.log(keyName, value)
     this[keyName] = value
   }
 
@@ -59,6 +61,7 @@ class Wbf {
     this.readMode = readMode
     if (readMode !== 'finger') {
       const allText = document.body.innerText
+      console.log('alltext.length', allText.length)
       this.playAudio(allText)
     }
     this.addHandler()
@@ -84,9 +87,7 @@ class Wbf {
     return msg
   }
 
-  playAudio (
-    str: string
-  ): SpeechSynthesisUtterance | undefined {
+  playAudio (str: string): SpeechSynthesisUtterance | undefined {
     if (this.externalFn != null) {
       this.externalFn(str)
     } else {
@@ -127,6 +128,65 @@ class Wbf {
     return showBar
   }
 
+  createConsole (): void {
+    const prev = document.getElementById(consoleDomId)
+    if (prev != null) return
+    const consoleEl = document.createElement('div')
+    consoleEl.id = consoleDomId
+    consoleEl.classList.add(consoleClassName)
+    consoleEl.innerHTML = `
+    <div class="${consoleClassName}-main">
+      <div>
+        <button id="_wbfClose">关闭</button>
+        <button id="_wbfContinuousRead">连读</button>
+        <button id="_wbfFingerRead">指读</button> 
+      </div>
+        |
+        <div>
+        音量
+          <button id="_wbfAddVolume">+</button>
+          <button id="_wbfReduceVolume">-</button>
+        </div>
+        |
+        <div>
+        语速
+          <button id="_wbfAddRate">+</button>
+          <button id="_wbfReduceRate">-</button>
+        </div>
+    </div>`
+
+    document.body.insertBefore(consoleEl, document.body.firstChild)
+    const closeBtn = document.getElementById('_wbfClose')
+    const continuousReadBtn = document.getElementById('_wbfContinuousRead')
+    const fingerReadBtn = document.getElementById('_wbfFingerRead')
+    const addVolumeBtn = document.getElementById('_wbfAddVolume')
+    const reduceVolumeBtn = document.getElementById('_wbfReduceVolume')
+    const addRateBtn = document.getElementById('_wbfAddRate')
+    const reduceRateBtn = document.getElementById('_wbfReduceRate')
+
+    closeBtn != null && (closeBtn.onclick = () => this.close())
+    continuousReadBtn != null &&
+      (continuousReadBtn.onclick = () => this.changeMode('continuous'))
+    fingerReadBtn != null &&
+      (fingerReadBtn.onclick = () => this.changeMode('finger'))
+    addVolumeBtn != null &&
+      (addVolumeBtn.onclick = () => this.changeOptions('volume', ++this.volume))
+    reduceVolumeBtn != null &&
+      (reduceVolumeBtn.onclick = () =>
+        this.changeOptions('volume', --this.volume))
+    addRateBtn != null &&
+      (addRateBtn.onclick = () => this.changeOptions('rate', ++this.rate))
+    reduceRateBtn != null &&
+      (reduceRateBtn.onclick = () => this.changeOptions('rate', --this.rate))
+  }
+
+  removeConsole (): void {
+    const consoleEl = document.getElementById(consoleDomId)
+    if (consoleEl != null) {
+      consoleEl.remove()
+    }
+  }
+
   removeShowBarDom (): void {
     if (this.showBarEl != null) {
       this.showBarEl.remove()
@@ -144,6 +204,7 @@ interface Options {
   pitch?: number
   externalFn?: Function
   volume?: number
+  needConsole?: boolean
 }
 
 export default Wbf
