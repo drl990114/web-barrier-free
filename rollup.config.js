@@ -6,7 +6,7 @@ export default {
   input: './src/index.ts',
   output: [
     {
-      name: 'wbf',
+      name: 'Wbf',
       file: 'dist/index.js',
       format: 'umd',
       sourcemap: true
