@@ -61,9 +61,7 @@ class Wbf {
     }
     if (typeof value === 'number') {
       value >= 2 && (value = 2)
-      value <= 0 && (value = 1)
     }
-
     this[keyName] = value
   }
 
@@ -74,7 +72,6 @@ class Wbf {
     this.readMode = readMode
     if (readMode !== 'finger') {
       const allText = document.body.innerText
-      console.log('alltext.length', allText.length)
       this.playAudio(allText)
     }
     this.addHandler()
