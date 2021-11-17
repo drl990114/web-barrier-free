@@ -14,7 +14,7 @@ $ yarn add web-barrier-free
 ```
 
 **demo:**
-- [en-demo](https://github.com/halodong/web-barrier-free/blob/master/examples/en-wbf.html)
+- [en-demo](https://codesandbox.io/s/pedantic-stitch-ru1no)
 - [zh-CN-demo](https://halodong.github.io/)
 
 ## 使用
