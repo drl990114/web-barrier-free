@@ -1,6 +1,6 @@
 .emphasizeStyle {
-  background: black;
-  color: white;
+  background: black !important;
+  color: white !important;
 }
 
 .consoleEl {
