@@ -44,7 +44,7 @@ type language = 'en' | 'zh-CN'
 音量，范围 2 ~ 0.1，默认值：1。
 
 ### externalFn
-你可以提供一个外部的阅读文字方法 `externalFn`，而不使用 `calss Wbf` 提供的 playAudio 方法。
+你可以提供一个外部的阅读文字方法 `externalFn`，而不使用 `class Wbf` 提供的 playAudio 方法。
 ### needConsole
 是否需要默认的控制台元素, 默认值 `true`。
 
