@@ -52,5 +52,5 @@ type language = 'en' | 'zh-CN'
 详情请见[MDN SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis#browser_compatibility)
 ## 问题
 
-bug 或者建议，你可以通过[create an issue](https://github.com/bubkoo/logo.svg/issues/new)提交。
+bug 或者建议，你可以通过[create an issue](https://github.com/halodong/web-barrier-free/issues/new)提交。
 © 2021 GitHub, Inc.
