@@ -1,5 +1,14 @@
 import defaultOptions from './default'
-import { consoleClassName, consoleDomId, emphasizeClassName, optionsArr, showBarDomId, testReadMode } from './util'
+import {
+  consoleClassName,
+  consoleDomId,
+  emphasizeClassName,
+  getGather,
+  IGather,
+  optionsArr,
+  showBarDomId,
+  testReadMode
+} from './util'
 import { outHandler, overHandler } from './handlers'
 import './index.css'
 
@@ -50,7 +59,11 @@ class Wbf {
     if (optionsArr.includes[keyName] === false && this[keyName] !== undefined) {
       throw new Error(`${keyName} options do not exist on wbf`)
     }
-    console.log(keyName, value)
+    if (typeof value === 'number') {
+      value >= 2 && (value = 2)
+      value <= 0 && (value = 1)
+    }
+
     this[keyName] = value
   }
 
@@ -133,23 +146,24 @@ class Wbf {
     if (prev != null) return
     const consoleEl = document.createElement('div')
     consoleEl.id = consoleDomId
+    const gather: IGather = getGather(this.language)
     consoleEl.classList.add(consoleClassName)
     consoleEl.innerHTML = `
     <div class="${consoleClassName}-main">
       <div>
-        <button id="_wbfClose">关闭</button>
-        <button id="_wbfContinuousRead">连读</button>
-        <button id="_wbfFingerRead">指读</button> 
+        <button id="_wbfClose">${gather.close}</button>
+        <button id="_wbfContinuousRead">${gather.continuousRead}</button>
+        <button id="_wbfFingerRead">${gather.fingerRead}</button> 
       </div>
         |
         <div>
-        音量
+        ${gather.volume}
           <button id="_wbfAddVolume">+</button>
           <button id="_wbfReduceVolume">-</button>
         </div>
         |
         <div>
-        语速
+        ${gather.rate}
           <button id="_wbfAddRate">+</button>
           <button id="_wbfReduceRate">-</button>
         </div>
