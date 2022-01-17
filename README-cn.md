@@ -1,3 +1,8 @@
+[![NPM Version](https://img.shields.io/npm/v/web-barrier-free.svg)][npm-url]
+[![Build Status](https://app.travis-ci.com/halodong/web-barrier-free.svg?branch=master)](https://www.travis-ci.com)
+[![Downloads](http://img.shields.io/npm/dm/web-barrier-free.svg)][npm-url]
+<!-- [![Coverage Status](https://coveralls.io/repos/github/halodong/web-barrier-free/badge.svg?branch=master)](https://coveralls.io/github/halodong/web-barrier-free?branch=master) -->
+[npm-url]: https://npmjs.org/package/web-barrier-free
 # web-barrier-free
 一个可以帮助你快速添加无障碍阅读模式的 JavaScript 库。基于 `SpeechSynthesis` API实现。
 
