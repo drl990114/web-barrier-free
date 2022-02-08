@@ -1,7 +1,8 @@
+[![LICENSE](https://img.shields.io/github/license/bubkoo/html-to-image?style=flat-square)][./LICENSE]
 [![NPM Version](https://img.shields.io/npm/v/web-barrier-free.svg)][npm-url]
 [![Build Status](https://app.travis-ci.com/halodong/web-barrier-free.svg?branch=master)](https://www.travis-ci.com)
 [![Downloads](http://img.shields.io/npm/dm/web-barrier-free.svg)][npm-url]
-<!-- [![Coverage Status](https://coveralls.io/repos/github/halodong/web-barrier-free/badge.svg?branch=master)](https://coveralls.io/github/halodong/web-barrier-free?branch=master) -->
+[![Coverage Status](https://coveralls.io/repos/github/halodong/web-barrier-free/badge.svg?branch=master)](https://coveralls.io/github/halodong/web-barrier-free?branch=master)
 [npm-url]: https://npmjs.org/package/web-barrier-free
 # web-barrier-free
 一个可以帮助你快速添加无障碍阅读模式的 JavaScript 库。基于 `SpeechSynthesis` API实现。
@@ -25,7 +26,9 @@ $ yarn add web-barrier-free
 ## 使用
 
 **配置:**
-
+### opening
+一个表示当前是否为开启状态的 boolean 值。
+默认值：false 。
 ### readMode
 ```ts
 type readMode = 'finger' | 'continuous'
@@ -53,6 +56,33 @@ type language = 'en' | 'zh-CN'
 ### needConsole
 是否需要默认的控制台元素, 默认值 `true`。
 
+## 核心的 JavaScript API
+### open
+开启 Wbf 的函数。
+```typescript
+open (): void;
+```
+### close
+关闭 Wbf 的函数。
+```typescript
+close (): void; 
+```
+### changeOptions
+修改 Wbf 属性的函数，不能修改没有的属性和 `opening` 属性。
+```typescript
+changeOptions (keyName: string, value): void;
+```
+### changeMode
+修改 Wbf 阅读模式的函数。
+```typescript
+type readMode = 'finger' | 'continuous';
+changeMode (readMode: readMode): void;
+```
+### playAudio
+阅读字符串的函数。
+```typescript
+playAudio (str: string): SpeechSynthesisUtterance | undefined
+```
 ## 兼容性
 详情请见[MDN SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis#browser_compatibility)
 ## 问题
