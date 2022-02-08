@@ -26,6 +26,7 @@ class Wbf {
   private readonly outHandler
 
   constructor (options?: Options) {
+    // options init
     if (options == null) options = defaultOptions
     options?.readMode !== undefined && (this.readMode = options.readMode)
     options?.needConsole !== undefined &&
@@ -35,18 +36,35 @@ class Wbf {
     this.pitch = options?.pitch ?? defaultOptions.pitch
     this.volume = options?.volume ?? defaultOptions.volume
     this.externalFn = options?.externalFn ?? null
+
     this.overHandler = (e: { target: HTMLElement }) => overHandler(e, this)
     this.outHandler = (e: { target: HTMLElement }) => outHandler(e, this)
   }
 
   open (): void {
+    /**
+     *  Change mode to start wbf
+     *  And according to the options to determine whether to open the console dom
+     */
     if (this.opening) return
     this.changeMode(this.readMode)
+    if (this.showBarEl == null) {
+      const showBar = this.createShowBarDom()
+      this.showBarEl = showBar
+    }
+    this.addHandler()
     this.opening = true
     this.needConsole && this.createConsole()
   }
 
   close (): void {
+    /**
+     *  Remove was added emphasize elements
+     *  Cancel current speechSynthesis
+     *  Remove the corresponding listener event
+     *  Remove console and showBar
+     *
+     */
     const emphasizeEls = document.querySelectorAll(`.${emphasizeClassName}`)
     emphasizeEls.forEach((el) => {
       this.removeEmphasize(el)
@@ -59,16 +77,19 @@ class Wbf {
     this.opening = false
   }
 
+  // You can modify the properties of wbf through this method, but you cannot modify the opening state
   changeOptions (keyName: string, value): void {
     if (optionsArr.includes[keyName] === false && this[keyName] !== undefined) {
       throw new Error(`${keyName} options do not exist on wbf`)
     }
+    if (keyName === 'opening') throw new Error(`${keyName} cannot be changed `)
     if (typeof value === 'number') {
       value >= 2 && (value = 2)
     }
     this[keyName] = value
   }
 
+  // You can modify the wbf by this method reading mode
   changeMode (readMode: readMode): void {
     if (!testReadMode(readMode)) {
       throw new Error(`readMode not includes this ${readMode}`)
@@ -78,15 +99,9 @@ class Wbf {
       const allText = document.body.innerText
       this.playAudio(allText)
     }
-    this.addHandler()
   }
 
   addHandler (): void {
-    if (this.showBarEl == null) {
-      const showBar = this.createShowBarDom()
-      this.showBarEl = showBar
-    }
-
     document.addEventListener('mouseover', this.overHandler)
     document.addEventListener('mouseout', this.outHandler)
   }
@@ -221,5 +236,4 @@ interface Options {
   volume?: number
   needConsole?: boolean
 }
-
 export default Wbf
