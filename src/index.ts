@@ -13,6 +13,7 @@ import { outHandler, overHandler } from './handlers'
 import './index.css'
 
 class Wbf {
+  public opening: boolean = false
   public readMode: readMode = 'finger'
   public language: language
   public rate: number
@@ -39,7 +40,9 @@ class Wbf {
   }
 
   open (): void {
+    if (this.opening) return
     this.changeMode(this.readMode)
+    this.opening = true
     this.needConsole && this.createConsole()
   }
 
@@ -53,6 +56,7 @@ class Wbf {
     document.removeEventListener('mouseout', this.outHandler)
     this.removeShowBarDom()
     this.removeConsole()
+    this.opening = false
   }
 
   changeOptions (keyName: string, value): void {
