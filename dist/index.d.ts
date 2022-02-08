@@ -1,5 +1,6 @@
 import './index.css';
 declare class Wbf {
+    opening: boolean;
     readMode: readMode;
     language: language;
     rate: number;

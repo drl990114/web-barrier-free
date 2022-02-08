@@ -143,10 +143,12 @@
       function Wbf(options) {
           var _this = this;
           var _a, _b, _c, _d, _e;
+          this.opening = false;
           this.readMode = 'finger';
           this.showBarEl = null;
           this.needConsole = true;
           this.externalFn = null;
+          // options init
           if (options == null)
               options = defaultOptions;
           (options === null || options === void 0 ? void 0 : options.readMode) !== undefined && (this.readMode = options.readMode);
@@ -161,11 +163,30 @@
           this.outHandler = function (e) { return outHandler(e, _this); };
       }
       Wbf.prototype.open = function () {
+          /**
+           *  Change mode to start wbf
+           *  And according to the options to determine whether to open the console dom
+           */
+          if (this.opening)
+              return;
           this.changeMode(this.readMode);
+          if (this.showBarEl == null) {
+              var showBar = this.createShowBarDom();
+              this.showBarEl = showBar;
+          }
+          this.addHandler();
+          this.opening = true;
           this.needConsole && this.createConsole();
       };
       Wbf.prototype.close = function () {
           var _this = this;
+          /**
+           *  Remove was added emphasize elements
+           *  Cancel current speechSynthesis
+           *  Remove the corresponding listener event
+           *  Remove console and showBar
+           *
+           */
           var emphasizeEls = document.querySelectorAll("." + emphasizeClassName);
           emphasizeEls.forEach(function (el) {
               _this.removeEmphasize(el);
@@ -175,16 +196,21 @@
           document.removeEventListener('mouseout', this.outHandler);
           this.removeShowBarDom();
           this.removeConsole();
+          this.opening = false;
       };
+      // You can modify the properties of wbf through this method, but you cannot modify the opening state
       Wbf.prototype.changeOptions = function (keyName, value) {
           if (optionsArr.includes[keyName] === false && this[keyName] !== undefined) {
               throw new Error(keyName + " options do not exist on wbf");
           }
+          if (keyName === 'opening')
+              throw new Error(keyName + " cannot be changed ");
           if (typeof value === 'number') {
               value >= 2 && (value = 2);
           }
           this[keyName] = value;
       };
+      // You can modify the wbf by this method reading mode
       Wbf.prototype.changeMode = function (readMode) {
           if (!testReadMode(readMode)) {
               throw new Error("readMode not includes this " + readMode);
@@ -194,13 +220,8 @@
               var allText = document.body.innerText;
               this.playAudio(allText);
           }
-          this.addHandler();
       };
       Wbf.prototype.addHandler = function () {
-          if (this.showBarEl == null) {
-              var showBar = this.createShowBarDom();
-              this.showBarEl = showBar;
-          }
           document.addEventListener('mouseover', this.overHandler);
           document.addEventListener('mouseout', this.outHandler);
       };
