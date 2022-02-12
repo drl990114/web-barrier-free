@@ -1,6 +1,6 @@
 [![LICENSE](https://img.shields.io/github/license/bubkoo/html-to-image?style=flat-square)](./LICENSE)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/karma-runner/karma-coverage)
-[![NPM Version](https://img.shields.io/npm/v/web-barrier-free.svg)](npm-url)
+[![NPM Version](https://img.shields.io/npm/v/web-barrier-free.svg)][npm-url]
 [![Build Status](https://app.travis-ci.com/halodong/web-barrier-free.svg?branch=master)](https://www.travis-ci.com)
 
 [npm-url]: https://npmjs.org/package/web-barrier-free
