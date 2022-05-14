@@ -12,6 +12,7 @@ import {
 import { outHandler, overHandler } from './handlers'
 import './index.css'
 
+let instance: Wbf | null = null
 class Wbf {
   public opening: boolean = false
   public readMode: readMode = 'finger'
@@ -23,6 +24,12 @@ class Wbf {
   public needConsole: boolean = true
   private readonly overHandler
   private readonly outHandler
+  static getInstance = (options?: Options): Wbf => {
+    if (instance === null) {
+      instance = new Wbf(options)
+    }
+    return instance
+  }
 
   constructor (options?: Options) {
     // options init
@@ -37,6 +44,7 @@ class Wbf {
 
     this.overHandler = (e: { target: HTMLElement }) => overHandler(e, this)
     this.outHandler = (e: { target: HTMLElement }) => outHandler(e, this)
+    instance = this
   }
 
   open (): void {
@@ -226,7 +234,6 @@ interface Options {
   language?: language
   rate?: number
   pitch?: number
-  externalFn?: Function
   volume?: number
   needConsole?: boolean
 }

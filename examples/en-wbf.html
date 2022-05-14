@@ -237,11 +237,10 @@
             pitch: 1,
             readMode: 'finger'
         }
-        const instance = new Wbf(options)
+        const instance = Wbf.getInstance(options)
         const handleOpen = () => {
             instance.open()
         }
-
 
     </script>
 </body>
