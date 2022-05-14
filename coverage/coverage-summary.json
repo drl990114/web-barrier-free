@@ -1,0 +1,3 @@
+{"total": {"lines":{"total":240,"covered":88,"skipped":0,"pct":36.66},"statements":{"total":240,"covered":88,"skipped":0,"pct":36.66},"functions":{"total":19,"covered":4,"skipped":0,"pct":21.05},"branches":{"total":11,"covered":5,"skipped":0,"pct":45.45},"branchesTrue":{"total":0,"covered":0,"skipped":0,"pct":"Unknown"}}
+,"D:\\.aaaplanaa\\wbf\\src\\index.ts": {"lines":{"total":240,"covered":88,"skipped":0,"pct":36.66},"functions":{"total":19,"covered":4,"skipped":0,"pct":21.05},"statements":{"total":240,"covered":88,"skipped":0,"pct":36.66},"branches":{"total":11,"covered":5,"skipped":0,"pct":45.45}}
+}
