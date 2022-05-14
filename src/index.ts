@@ -115,10 +115,10 @@ class Wbf {
   }
 
   playAudio (str: string): SpeechSynthesisUtterance | undefined {
-      speechSynthesis.cancel()
-      const msg = this.createUtterance(str)
-      speechSynthesis.speak(msg)
-      return msg
+    speechSynthesis.cancel()
+    const msg = this.createUtterance(str)
+    speechSynthesis.speak(msg)
+    return msg
   }
 
   emphasize (el: HTMLElement | Element): void {
