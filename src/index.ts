@@ -21,7 +21,6 @@ class Wbf {
   public volume: number
   public showBarEl: HTMLDivElement | null = null
   public needConsole: boolean = true
-  public externalFn: Function | null = null
   private readonly overHandler
   private readonly outHandler
 
@@ -35,7 +34,6 @@ class Wbf {
     this.rate = options?.rate ?? defaultOptions.rate
     this.pitch = options?.pitch ?? defaultOptions.pitch
     this.volume = options?.volume ?? defaultOptions.volume
-    this.externalFn = options?.externalFn ?? null
 
     this.overHandler = (e: { target: HTMLElement }) => overHandler(e, this)
     this.outHandler = (e: { target: HTMLElement }) => outHandler(e, this)
@@ -117,14 +115,10 @@ class Wbf {
   }
 
   playAudio (str: string): SpeechSynthesisUtterance | undefined {
-    if (this.externalFn != null) {
-      this.externalFn(str)
-    } else {
       speechSynthesis.cancel()
       const msg = this.createUtterance(str)
       speechSynthesis.speak(msg)
       return msg
-    }
   }
 
   emphasize (el: HTMLElement | Element): void {
