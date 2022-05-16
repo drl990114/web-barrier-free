@@ -13,6 +13,7 @@ import { outHandler, overHandler } from './handlers'
 import './index.css'
 
 let instance: Wbf | null = null
+let compatible = true
 class Wbf {
   public opening: boolean = false
   public readMode: readMode = 'finger'
@@ -36,6 +37,10 @@ class Wbf {
   }
 
   constructor (options?: Options) {
+    if (typeof SpeechSynthesisUtterance === 'undefined' || typeof speechSynthesis === 'undefined') {
+      compatible = false
+      console.warn('Current browser does not support SpeechSynthesisUtterance and speechSynthesis')
+    }
     // options init
     if (options == null) options = defaultOptions
     options?.readMode !== undefined && (this.readMode = options.readMode)
@@ -82,7 +87,7 @@ class Wbf {
     emphasizeEls.forEach((el) => {
       this.removeEmphasize(el)
     })
-    window.speechSynthesis?.cancel()
+    compatible && window.speechSynthesis?.cancel()
     document.removeEventListener('mouseover', this.overHandler)
     document.removeEventListener('mouseout', this.outHandler)
     this.removeShowBarDom()
@@ -131,8 +136,9 @@ class Wbf {
   }
 
   playAudio (str: string): SpeechSynthesisUtterance | undefined {
+    if (!compatible) return
     window.speechSynthesis?.cancel()
-    const msg = this.createUtterance(str)
+    const msg = this.createUtterance(str) as SpeechSynthesisUtterance
     window.speechSynthesis?.speak(msg)
     return msg
   }
@@ -150,7 +156,8 @@ class Wbf {
     document.addEventListener('mouseout', this.outHandler)
   }
 
-  private createUtterance (str): SpeechSynthesisUtterance {
+  private createUtterance (str): SpeechSynthesisUtterance | undefined {
+    if (!compatible) return
     const msg = new SpeechSynthesisUtterance()
     msg.text = str
     msg.lang = this.language
