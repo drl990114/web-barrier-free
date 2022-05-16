@@ -21,7 +21,7 @@ class Wbf {
   public pitch: number
   public volume: number
   public showBarEl: HTMLDivElement | null = null
-  public needConsole: boolean = true
+  private readonly needConsole: boolean = true
   private readonly overHandler
   private readonly outHandler
   static getInstance = (options?: Options): Wbf => {
@@ -29,6 +29,10 @@ class Wbf {
       instance = new Wbf(options)
     }
     return instance
+  }
+
+  static clearInstance = (): void => {
+    instance = null
   }
 
   constructor (options?: Options) {
@@ -44,7 +48,10 @@ class Wbf {
 
     this.overHandler = (e: { target: HTMLElement }) => overHandler(e, this)
     this.outHandler = (e: { target: HTMLElement }) => outHandler(e, this)
-    instance = this
+    if (instance != null) {
+      instance = this
+      console.warn('There are currently multiple wbf instances')
+    }
   }
 
   open (): void {
@@ -75,7 +82,7 @@ class Wbf {
     emphasizeEls.forEach((el) => {
       this.removeEmphasize(el)
     })
-    speechSynthesis.cancel()
+    window.speechSynthesis?.cancel()
     document.removeEventListener('mouseover', this.overHandler)
     document.removeEventListener('mouseout', this.outHandler)
     this.removeShowBarDom()
@@ -84,13 +91,29 @@ class Wbf {
   }
 
   // You can modify the properties of wbf through this method, but you cannot modify the opening state
-  changeOptions (keyName: string, value): void {
+  setOption (keyName: string, value): void {
     if (optionsArr.includes[keyName] === false && this[keyName] !== undefined) {
       throw new Error(`${keyName} options do not exist on wbf`)
     }
     if (keyName === 'opening') throw new Error(`${keyName} cannot be changed `)
-    if (typeof value === 'number') {
-      value >= 2 && (value = 2)
+    switch (keyName) {
+      case 'rate':
+        // rate can range between 0.1 (lowest) and 10 (highest)
+        if (value > 10) value = 10
+        if (value < 0.1) value = 0.1
+        break
+      case 'pitch':
+        // pitch can range between 0 (lowest) and 2 (highest)
+        if (value > 2) value = 2
+        if (value < 0) value = 0
+        break
+      case 'volume':
+        // volume can range  between 0 (lowest) and 1 (highest.)
+        if (value > 1) value = 1
+        if (value < 0) value = 0
+        break
+      default:
+        break
     }
     this[keyName] = value
   }
@@ -107,25 +130,10 @@ class Wbf {
     }
   }
 
-  addHandler (): void {
-    document.addEventListener('mouseover', this.overHandler)
-    document.addEventListener('mouseout', this.outHandler)
-  }
-
-  createUtterance (str): SpeechSynthesisUtterance {
-    const msg = new SpeechSynthesisUtterance()
-    msg.text = str
-    msg.lang = this.language
-    msg.pitch = this.pitch
-    msg.rate = this.rate
-    msg.volume = this.volume
-    return msg
-  }
-
   playAudio (str: string): SpeechSynthesisUtterance | undefined {
-    speechSynthesis.cancel()
+    window.speechSynthesis?.cancel()
     const msg = this.createUtterance(str)
-    speechSynthesis.speak(msg)
+    window.speechSynthesis?.speak(msg)
     return msg
   }
 
@@ -137,7 +145,22 @@ class Wbf {
     el.classList.remove(emphasizeClassName)
   }
 
-  createShowBarDom (): HTMLDivElement {
+  private addHandler (): void {
+    document.addEventListener('mouseover', this.overHandler)
+    document.addEventListener('mouseout', this.outHandler)
+  }
+
+  private createUtterance (str): SpeechSynthesisUtterance {
+    const msg = new SpeechSynthesisUtterance()
+    msg.text = str
+    msg.lang = this.language
+    msg.pitch = this.pitch
+    msg.rate = this.rate
+    msg.volume = this.volume
+    return msg
+  }
+
+  private createShowBarDom (): HTMLDivElement {
     const prev = document.getElementById(showBarDomId) as HTMLDivElement | null
     if (prev != null) return prev
     const showBar = document.createElement('div')
@@ -159,7 +182,7 @@ class Wbf {
     return showBar
   }
 
-  createConsole (): void {
+  private createConsole (): void {
     const prev = document.getElementById(consoleDomId)
     if (prev != null) return
     const consoleEl = document.createElement('div')
@@ -202,24 +225,23 @@ class Wbf {
     fingerReadBtn != null &&
       (fingerReadBtn.onclick = () => this.changeMode('finger'))
     addVolumeBtn != null &&
-      (addVolumeBtn.onclick = () => this.changeOptions('volume', ++this.volume))
+      (addVolumeBtn.onclick = () => this.setOption('volume', this.volume + 0.1))
     reduceVolumeBtn != null &&
-      (reduceVolumeBtn.onclick = () =>
-        this.changeOptions('volume', --this.volume))
+      (reduceVolumeBtn.onclick = () => this.setOption('volume', this.volume - 0.1))
     addRateBtn != null &&
-      (addRateBtn.onclick = () => this.changeOptions('rate', ++this.rate))
+      (addRateBtn.onclick = () => this.setOption('rate', this.rate + 0.1))
     reduceRateBtn != null &&
-      (reduceRateBtn.onclick = () => this.changeOptions('rate', --this.rate))
+      (reduceRateBtn.onclick = () => this.setOption('rate', this.rate - 0.1))
   }
 
-  removeConsole (): void {
+  private removeConsole (): void {
     const consoleEl = document.getElementById(consoleDomId)
     if (consoleEl != null) {
       consoleEl.remove()
     }
   }
 
-  removeShowBarDom (): void {
+  private removeShowBarDom (): void {
     if (this.showBarEl != null) {
       this.showBarEl.remove()
       this.showBarEl = null
