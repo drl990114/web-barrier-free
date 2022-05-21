@@ -133,7 +133,7 @@ playAudio (str: string): SpeechSynthesisUtterance | undefined
 
 ## 兼容性
 
-详情请见[MDN SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis#browser_compatibility)
+详情请见 [MDN SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis#browser_compatibility)
 
 ## 问题
 

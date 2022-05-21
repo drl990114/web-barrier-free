@@ -135,7 +135,7 @@ playAudio (str: string): SpeechSynthesisUtterance | undefined
 
 ## Compatibility
 
-See for details[MDN SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis#browser_compatibility)
+See for details [MDN SpeechSynthesis](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis#browser_compatibility)
 
 ## Problem
 
