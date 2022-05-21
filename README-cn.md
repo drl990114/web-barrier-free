@@ -27,7 +27,9 @@ $ yarn add web-barrier-free
 
 ## 使用
 
-**示例** Wbf 采用单例设计模式，推荐使用 getInstance 创建和获得实例。
+**示例** 
+
+Wbf 采用单例设计模式，推荐使用 getInstance 创建和获得实例。
 
 ```js
 const options = {

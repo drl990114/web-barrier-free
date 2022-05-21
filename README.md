@@ -29,7 +29,8 @@ $ yarn add web-barrier-free
 
 ## Use
 
-**Example**
+**Example:**
+
 Wbf adopts the singleton design pattern, and it is recommended to use getInstance to create and obtain instances.
 
 ```js
