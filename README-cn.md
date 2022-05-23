@@ -6,6 +6,7 @@
 
 一个可以帮助你快速添加无障碍阅读模式的 JavaScript 库。基于 `SpeechSynthesis` API 实现。
 
+[English](./README.md)
 ## 安装
 
 使用 npm

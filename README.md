@@ -6,7 +6,7 @@
 
 A JavaScript library that can help you quickly add accessible reading modes. Based on `SpeechSynthesis` API implementation.
 
-[简体中文](https://github.com/halodong/web-barrier-free/blob/master/README-cn.md)
+[简体中文](./README-cn.md)
 
 ## Install
 
