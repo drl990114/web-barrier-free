@@ -10,16 +10,18 @@ A JavaScript library that can help you quickly add accessible reading modes. Bas
 
 ## Install
 
+**Note: In version 2.0, the package name was changed to wbf**
+
 Use npm
 
 ```
-$ npm install web-barrier-free
+$ npm install wbf
 ```
 
 or yarn
 
 ```
-$ yarn add web-barrier-free
+$ yarn add wbf
 ```
 
 **demo:**

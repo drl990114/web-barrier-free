@@ -10,16 +10,18 @@
 
 ## 安装
 
+**注意：在2.0版本，包名称改为wbf**
+
 使用 npm
 
 ```
-$ npm install web-barrier-free
+$ npm install wbf
 ```
 
 或者 yarn
 
 ```
-$ yarn add web-barrier-free
+$ yarn add wbf
 ```
 
 **demo:**
