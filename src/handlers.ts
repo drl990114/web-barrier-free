@@ -9,6 +9,11 @@ const overHandler = (
   if (notContainChildText.length === 0) return
   if (e.target !== document.body && e.target.tagName.toLowerCase() !== 'html' &&
   e.target.id !== showBarDomId) {
+    /**
+     * 1. Add style to the current node
+     * 2. Read current node text
+     * 3. Show to showbar
+     */
     wbf.emphasize(e.target)
     const text = getElText(e.target, wbf.language)
     wbf.readMode === 'finger' && wbf.playAudio(text)
@@ -30,7 +35,8 @@ const overHandler = (
   }
 }
 
-const outHandler = (e: { target: HTMLElement }, wbf): void => {
+const outHandler = (e: { target: HTMLElement }, wbf: Wbf): void => {
+  // remove className
   wbf.removeEmphasize(e.target)
 }
 export { overHandler, outHandler }

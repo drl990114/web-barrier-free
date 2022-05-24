@@ -1,6 +1,6 @@
 {
-  "name": "web-barrier-free",
-  "version": "1.1.1",
+  "name": "wbf",
+  "version": "2.0.0",
   "private": false,
   "author": "halodong",
   "main": "dist/index.js",
@@ -11,17 +11,17 @@
     "delete": "rimraf node_modules",
     "clear": "rimraf dist",
     "lint": "eslint --ext js,ts,tsx .",
-    "prepublish": "npm run build"
+    "test": "jest && jest-coverage-badges"
   },
   "keywords": [
     "web",
-    "barrier",
-    "free",
+    "Accessibility",
     "voice",
     "speechSynthesis",
     "SpeechSynthesisUtterance",
     "dom",
-    "bom"
+    "bom",
+    "audio"
   ],
   "homepage": "https://github.com/halodong/web-barrier-free",
   "repository": {
@@ -30,18 +30,25 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.0.5",
+    "@types/jest": "^27.5.1",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-config-standard-with-typescript": "^21.0.1",
     "eslint-plugin-standard": "^5.0.0",
-    "execa": "^5.1.1",
+    "jest": "^28.1.0",
+    "jest-config": "^28.1.0",
+    "jest-coverage-badges": "^1.1.2",
+    "jest-css-modules": "^2.1.0",
+    "jest-environment-jsdom": "^28.1.0",
     "postcss": "^8.3.11",
     "rimraf": "^3.0.2",
     "rollup": "^2.58.0",
     "rollup-plugin-postcss": "^4.0.1",
     "rollup-plugin-typescript2": "^0.30.0",
     "standard": "^16.0.4",
-    "typescript": "^4.4.4"
+    "ts-jest": "^28.0.2",
+    "typescript": "^4.4.4",
+    "codecov": "^3.8.3"
   }
 }

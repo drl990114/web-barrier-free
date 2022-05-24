@@ -4,3 +4,7 @@ dist
 build
 es
 lib
+
+*.json
+
+examples
