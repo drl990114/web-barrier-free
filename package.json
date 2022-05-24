@@ -1,6 +1,6 @@
 {
   "name": "wbf",
-  "version": "1.1.2",
+  "version": "2.0.0",
   "private": false,
   "author": "halodong",
   "main": "dist/index.js",
@@ -15,13 +15,13 @@
   },
   "keywords": [
     "web",
-    "barrier",
-    "free",
+    "Accessibility",
     "voice",
     "speechSynthesis",
     "SpeechSynthesisUtterance",
     "dom",
-    "bom"
+    "bom",
+    "audio"
   ],
   "homepage": "https://github.com/halodong/web-barrier-free",
   "repository": {
@@ -49,5 +49,8 @@
     "standard": "^16.0.4",
     "ts-jest": "^28.0.2",
     "typescript": "^4.4.4"
+  },
+  "dependencies": {
+    "codecov": "^3.8.3"
   }
 }
