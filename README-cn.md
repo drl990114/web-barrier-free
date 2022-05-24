@@ -1,4 +1,4 @@
-[![LICENSE](https://img.shields.io/github/license/bubkoo/html-to-image?style=flat-square)](./LICENSE) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/karma-runner/karma-coverage) [![NPM Version](https://img.shields.io/npm/v/web-barrier-free.svg)][npm-url] [![Build Status](https://app.travis-ci.com/halodong/web-barrier-free.svg?branch=master)](https://www.travis-ci.com) [![jest coverage](coverage/badge-statements.svg)](coverage/badge-statements.svg)
+[![LICENSE](https://img.shields.io/github/license/bubkoo/html-to-image?style=flat-square)](./LICENSE) [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/karma-runner/karma-coverage) [![NPM Version](https://img.shields.io/npm/v/web-barrier-free.svg)][npm-url] [![Build Status](https://app.travis-ci.com/halodong/web-barrier-free.svg?branch=master)](https://www.travis-ci.com) [![codecov](https://codecov.io/gh/halodong/web-barrier-free/branch/master/graph/badge.svg?token=VUFO08431V)](https://codecov.io/gh/halodong/web-barrier-free)
 
 [npm-url]: https://npmjs.org/package/web-barrier-free
 
@@ -7,6 +7,7 @@
 一个可以帮助你快速添加无障碍阅读模式的 JavaScript 库。基于 `SpeechSynthesis` API 实现。
 
 [English](./README.md)
+
 ## 安装
 
 使用 npm
@@ -28,7 +29,7 @@ $ yarn add web-barrier-free
 
 ## 使用
 
-**示例** 
+**示例**
 
 Wbf 采用单例设计模式，推荐使用 getInstance 创建和获得实例。
 
