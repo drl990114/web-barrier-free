@@ -1,6 +1,6 @@
 {
   "name": "wbf",
-  "version": "2.0.0",
+  "version": "2.0.3",
   "private": false,
   "author": "halodong",
   "main": "dist/index.js",
@@ -33,6 +33,7 @@
     "@types/jest": "^27.5.1",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
+    "codecov": "^3.8.3",
     "eslint-config-standard": "^16.0.3",
     "eslint-config-standard-with-typescript": "^21.0.1",
     "eslint-plugin-standard": "^5.0.0",
@@ -45,10 +46,10 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.58.0",
     "rollup-plugin-postcss": "^4.0.1",
+    "rollup-plugin-size": "^0.2.2",
     "rollup-plugin-typescript2": "^0.30.0",
     "standard": "^16.0.4",
     "ts-jest": "^28.0.2",
-    "typescript": "^4.4.4",
-    "codecov": "^3.8.3"
+    "typescript": "^4.4.4"
   }
 }

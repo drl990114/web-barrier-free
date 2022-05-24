@@ -1,6 +1,7 @@
 import ts from 'rollup-plugin-typescript2'
 import resolve from '@rollup/plugin-node-resolve'
 import postcss from 'rollup-plugin-postcss'
+import size from 'rollup-plugin-size'
 
 export default {
   input: './src/index.ts',
@@ -15,6 +16,7 @@ export default {
   plugins: [
     ts({ declaration: false, module: 'ES6' }),
     resolve(),
-    postcss()
+    postcss(),
+    size()
   ]
 }
