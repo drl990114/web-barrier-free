@@ -1,6 +1,6 @@
 {
   "name": "wbf",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "private": false,
   "author": "halodong",
   "main": "dist/index.js",
