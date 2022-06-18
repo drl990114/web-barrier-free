@@ -26,7 +26,7 @@ $ yarn add wbf
 
 **demo:**
 
-- [en-demo](https://codesandbox.io/s/pedantic-stitch-ru1no)
+- [en-demo](https://codesandbox.io/s/loving-pasteur-ui8n0q)
 - [zh-CN-demo](https://halodong.github.io/)
 
 ## Use
